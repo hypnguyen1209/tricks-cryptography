@@ -170,52 +170,21 @@ if __name__ == '__main__':
 #### 9. Tìm phần tử sinh trong nhóm Zn
 
 ```python
-import math
-def prime_factors(n):
-    i = 2
-    factors = []
-    while i * i <= n:
-        if n % i:
-            i += 1
-        else:
-            n //= i
-            factors.append(i)
-    if n > 1:
-        factors.append(n)
-    k = [(x, factors.count(x)) for x in set(factors)]
-    return dict(k)
-  
-def phi(n):
-    phi_n = n
-    for i in prime_factors(n):
-        phi_n *= (1-1/i)
-    return int(phi_n)
-  
-def find_min_generator(n):
-    phi_n = phi(n)
-    a = prime_factors(phi_n)
-    check = 0
-    for i in range(2,phi_n):
-        for p in a:
-            if pow(i,phi_n//p,n) == 1:
-                check = 0
-                break
-            else:
-                check = 1
-        if check : return i
-  
-def list_generators_of_Zn(n):
-    factors = prime_factors(n)
-    prime_factor = list(factors.keys())
-    exp = list(factors.values())
-    if n == 2 or n == 4 or n == prime_factor[0]**exp[0] or n == 2*(prime_factor[0]**exp[0]):
-        min_generator = find_min_generator(n)
-        return f'tập các phần tử sinh của Z{n} là {sorted([pow(min_generator,i,n) for i in range(1,phi(n)) if math.gcd(i,phi(n)) == 1])}'
-    return f"Z{n} không có phần tử sinh"
-  
-if __name__ == '__main__':
-    n = 37
-    print(list_generators_of_Zn(n))
+def list_generators_of_Zn(n): 
+    Zn = [i for i in range(1,n) if gcd(i,n) == 1]
+    gens = []
+    for a in Zn:
+        g = []
+        for i in range(euler_phi(n)):
+            g.append(pow(a,i,n))
+        if sorted(list(set(g))) == Zn:
+            gens.append(a)
+    if not gens:
+        return f"Z{n} không có phần tử sinh"
+    return f"tập các phần tử sinh của Z{n} là {gens}"
+
+n = 37
+list_generators_of_Zn(n)
 ```
 
 #### 10. Phần dư trung hoa
