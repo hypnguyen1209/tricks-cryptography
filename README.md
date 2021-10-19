@@ -474,9 +474,9 @@ S = 3301
 d = [12,17,33, 74, 157, 316, 620, 1230, 2460] # dãy siêu tăng
 result = ''
 for i in d[::-1]:
-  if S - i > 0:
+  if S - i >= 0:
     result += '1'
     S -= i
   else: result += '0'
-print(result)
+print(result[::-1])
 ```
