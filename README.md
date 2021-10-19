@@ -445,3 +445,24 @@ def decrypt(P1,P2):
     return P2-nB*P1
 decrypt(P1,P2)
 ```
+
+#### 19. Xác thực chữ ký số ElGamal
+
+```python
+p = 467
+alpha = 2
+a = 127
+k = 213
+beta = int(pow(alpha,a,p))
+def sign(x):
+    Y = int(pow(alpha,k,p))
+    S = (x-a*Y)*int(pow(k,-1,p-1))%(p-1)
+    return Y,S
+def verify(x,Y,S):
+    return pow(beta,Y,p)*pow(Y,S,p) == pow(alpha,x,p)
+
+x = 100
+Y,S = sign(x)
+print(f'chữ kí của x là : {Y,S}')
+verify(x,Y,S)
+```
